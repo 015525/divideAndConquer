@@ -10,29 +10,29 @@ public class RandomizedQuickSort {
         x=9;
         arr[2]=9;
     }*/
-    private int randSelect(int arr[], int p, int q, int i, boolean first_enter){
+    public int randSelect(int arr[], int p, int q, int i, boolean first_enter){
         if (first_enter){
             if (q%2!=0){
-                System.out.println("in first enter");
+                //System.out.println("in first enter");
                 i--;
             }
         }
-        System.out.println("p is " + p + " q is " + q + " i is " + i);
+        //System.out.println("p is " + p + " q is " + q + " i is " + i);
         if (p==q){
-            System.out.println("p is "+p);
+            //System.out.println("p is "+p);
             return arr[p];
         }
         int r = randPartion(arr, p, q);
-        System.out.println("random generated pivot is " + r);
+        //System.out.println("random generated pivot is " + r);
         int k = r-p;
-        System.out.println("k is " + k);
+        /*System.out.println("k is " + k);
         for(int c = p; c<q+1; c++){
             System.out.print(arr[c] + " ");
         }
         System.out.println();
-        System.out.println("================================");
+        System.out.println("================================");*/
         if (i==k){
-            System.out.println("i is "+i);
+            //System.out.println("i is "+i);
             return arr[r];
         }
         if (i<k){
@@ -47,16 +47,16 @@ public class RandomizedQuickSort {
         int r = new Random().nextInt(p, q);
         //int r = 1;
         //int r= this.pivot_test[c++];
-        System.out.println("random pivote is " + r);
+        //System.out.println("random pivote is " + r);
         swap(arr, p, r);
         return partition(arr, p, q);
     }
 
     private int partition(int[] arr, int p, int q) {
-        System.out.println("Entered");
+        //System.out.println("Entered");
         int x = arr[p];
         int i = p;
-        System.out.println("i of partition is " + i);
+        //System.out.println("i of partition is " + i);
         for (int j=i+1; j<q+1; j++){
             if (arr[j] < x){
                 i++;

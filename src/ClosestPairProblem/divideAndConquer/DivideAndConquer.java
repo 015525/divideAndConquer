@@ -5,57 +5,39 @@ import java.util.Comparator;
 
 public class DivideAndConquer {
 
-    private double[][] FindClosetPairDis(int[][] xarr, int [][] yarr){
+    private double FindClosetPairDis(double[][] xarr, double[][] yarr){
         if (xarr.length<=3) return get_smallest_delta(xarr);
 
         int sep_line = xarr.length/2;
-        int[][] Larr = Arrays.copyOfRange(xarr, 0, sep_line);
-        int[][] Rarr = Arrays.copyOfRange(xarr, sep_line, xarr.length);
+        double[][] Larr = Arrays.copyOfRange(xarr, 0, sep_line);
+        double[][] Rarr = Arrays.copyOfRange(xarr, sep_line, xarr.length);
 
-        double deltaL[][] = FindClosetPairDis(Larr, yarr);
-        double deltaR[][] = FindClosetPairDis(Rarr, yarr);
+        double deltaL = FindClosetPairDis(Larr, yarr);
+        double deltaR = FindClosetPairDis(Rarr, yarr);
 
-        double[][] deltaWithPoints = new double[3][2];
-        double delta;
-        if (deltaR[0][0] < deltaL[0][0]){
-            delta = deltaR[0][0];
-            deltaWithPoints = Arrays.copyOfRange(deltaR, 0, deltaR.length);
-        }else {
-            delta = deltaL[0][0];
-            deltaWithPoints = Arrays.copyOfRange(deltaL, 0, deltaL.length);
-        }
-        //double delta = Math.min(deltaR[0][0], deltaL[0][0]);
-        int [][][] fliteredArr_withLength = deletePointsFurtherThanDelta(yarr, delta, xarr[sep_line]);
+        double delta = Math.min(deltaR, deltaL);
+        double [][][] fliteredArr_withLength = deletePointsFurtherThanDelta(yarr, delta, xarr[sep_line]);
 
-        deltaWithPoints  = getMinDelta(fliteredArr_withLength[0], fliteredArr_withLength[1][0][0], deltaWithPoints);
+        delta  = getMinDelta(fliteredArr_withLength[0], fliteredArr_withLength[1][0][0], delta);
 
-        return deltaWithPoints;
+        return delta;
     }
 
-    private double[][] getMinDelta(int[][] fliteredArr, int l, double[][] deltaWithPoints) {
-        /*double[][] deltaWithPoints = new double[3][2];
-        deltaWithPoints[0][0] =  Math.sqrt(Math.pow((fliteredArr[0][0] - fliteredArr[1][0]), 2) + Math.pow((fliteredArr[0][1] - fliteredArr[1][1]), 2));
-        deltaWithPoints[1][0] = fliteredArr[0][0];
-        deltaWithPoints[1][1] = fliteredArr[0][1];
-        deltaWithPoints[2][0] = fliteredArr[1][0];
-        deltaWithPoints[2][1] = fliteredArr[1][1];*/
-        for (int i=0; i< l-7; i++){
-            for (int j=1; j<8; j++){
-                double temp =  Math.sqrt(Math.pow((fliteredArr[i][0] - fliteredArr[i+j][0]), 2) + Math.pow((fliteredArr[i][1] - fliteredArr[i+j][1]), 2));
-                if (temp<deltaWithPoints[0][0]){
-                    deltaWithPoints[0][0] = temp;
-                    deltaWithPoints[1][0] = fliteredArr[i][0];
-                    deltaWithPoints[1][1] = fliteredArr[i][1];
-                    deltaWithPoints[2][0] = fliteredArr[i+j][0];
-                    deltaWithPoints[2][1] = fliteredArr[i+j][1];
-                }
+    private double getMinDelta(double[][] fliteredArr, double l, double delta) {
+
+        double final_length = l-7;
+        if (l-7<0) final_length = l;
+        for (int i=0; i< final_length; i++){
+            for (int j=1; j<Math.min(8, l); j++){
+                double temp =  Math.max(Math.abs((fliteredArr[i][0] - fliteredArr[i+j][0])) , Math.abs((fliteredArr[i][1] - fliteredArr[i+j][1])));
+                if (temp<delta) delta = temp;
             }
         }
-        return deltaWithPoints;
+        return delta;
     }
 
-    private int[][][] deletePointsFurtherThanDelta(int[][] yarr, double delta, int[] med_point) {
-        int[][] filteredArray = new int[yarr.length][2];
+    private double[][][] deletePointsFurtherThanDelta(double[][] yarr, double delta, double[] med_point) {
+        double[][] filteredArray = new double[yarr.length][2];
         int c=0;
         for (int i=0; i< yarr.length; i++){
             double temp =  Math.sqrt(Math.pow((yarr[i][0] - med_point[0]), 2) + Math.pow((yarr[i][1] - med_point[1]), 2));
@@ -64,63 +46,54 @@ public class DivideAndConquer {
             filteredArray[c][1] = yarr[i][1];
             c++;
         }
-        int[][][] return_array = {filteredArray, {{c}}};
+        double[][][] return_array = {filteredArray, {{c}}};
         return return_array;
     }
 
-    private double[][] get_smallest_delta(int[][] xarr) {
-        double[][] deltaWithPoints = new double[3][2];
-        deltaWithPoints[0][0] =  Math.sqrt(Math.pow((xarr[0][0] - xarr[1][0]), 2) + Math.pow((xarr[0][1] - xarr[1][1]), 2));
-        deltaWithPoints[1][0] = xarr[0][0];
-        deltaWithPoints[1][1] = xarr[0][1];
-        deltaWithPoints[2][0] = xarr[1][0];
-        deltaWithPoints[2][1] = xarr[1][1];
+    private double get_smallest_delta(double[][] xarr) {
+        double delta = Math.max(Math.abs((xarr[0][0] - xarr[1][0])) , Math.abs((xarr[0][1] - xarr[1][1])));
+
         for(int i=0; i<xarr.length; i++){
             for(int j=i; j< xarr.length; j++){
                 if (j==i) continue;
-                double temp = Math.sqrt(Math.pow((xarr[i][0] - xarr[j][0]), 2) + Math.pow((xarr[i][1] - xarr[j][1]), 2));
-                if (temp<deltaWithPoints[0][0]){
-                    deltaWithPoints[0][0] = temp;
-                    deltaWithPoints[1][0] = xarr[i][0];
-                    deltaWithPoints[1][1] = xarr[i][1];
-                    deltaWithPoints[2][0] = xarr[j][0];
-                    deltaWithPoints[2][1] = xarr[j][1];
-                }
+                double temp = Math.max(Math.abs((xarr[i][0] - xarr[j][0])) , Math.abs((xarr[i][1] - xarr[j][1])));
+                if (temp<delta) delta = temp;
             }
         }
-        return deltaWithPoints;
+        return delta;
     }
 
-    private int[][] sortPointBasedOnY(int[][] pointsArr) {
+    private void sortPointBasedOnY(double[][] pointsArr) {
         Arrays.sort(pointsArr, Comparator.comparingDouble(arr -> arr[1]));
-        return pointsArr;
     }
 
-    private int[][] sortPointBasedOnX(int[][] pointsArr) {
+    private void sortPointBasedOnX(double[][] pointsArr) {
         Arrays.sort(pointsArr, Comparator.comparingDouble(arr -> arr[0]));
-        return pointsArr;
     }
 
-    double FindClosetPair(int[][] pointsArr){
-        int[][] xarr = sortPointBasedOnX(pointsArr);
-        int[][] yarr = sortPointBasedOnY(pointsArr);
-        double deltaWithPoints[][] =  FindClosetPairDis(xarr, yarr);
-        double xDiff = Math.abs(deltaWithPoints[1][0] - deltaWithPoints[2][0]);
-        double yDiff = Math.abs(deltaWithPoints[1][1] - deltaWithPoints[2][1]);
-        return Math.max(xDiff, yDiff);
+    double FindClosetPair(double[][] pointsArr){
+        double[][] xarr = Arrays.copyOfRange(pointsArr, 0, pointsArr.length);
+        double[][] yarr = Arrays.copyOfRange(pointsArr, 0, pointsArr.length);
+        sortPointBasedOnX(xarr);
+        sortPointBasedOnY(yarr);
+        return  FindClosetPairDis(xarr, yarr);
     }
 
     public static void main(String[] args) {
-        int[][] points_array = {{1,1},{3,3}, {15,5}, {6,6}};
+        double[][] points_array = { {0,8980}, {0,2449}, {0,8526}, {0,5297}, {0,3138}, {0,8026}, {0,8837}, {0,8528}, {0,6652}, {0,6525}, {0,5912}, {0,3268}, {0,6365}, {0,4046}, {0,6796}, {0,8421}, {0,6324}, {0,3370}, {0,5651}, {0,5779}, {0,2706}, {0,7002}, {0,4673}};
+
         DivideAndConquer findCloset = new DivideAndConquer();
+        Tester t = new Tester();
         double maxSquareLength = findCloset.FindClosetPair(points_array);
-        System.out.println(maxSquareLength);
-
-
-        /*Arrays.sort(filteredArray, Comparator.comparingDouble(arr -> arr[1]));
-        for (int i=0; i<2; i++){
-            System.out.print(filteredArray[i][0] + " " + filteredArray[i][1]);
-            System.out.println();
-        }*/
+        double[][] maxSquareLength_withTester = t.get_greatest_length(points_array);
+        System.out.println("Divide and Conquer result : " + maxSquareLength + " Tester result : " + maxSquareLength_withTester[0][0] + " points : ");
+        System.out.print(maxSquareLength_withTester[1][0] + " " + maxSquareLength_withTester[1][1] + " , " + maxSquareLength_withTester[2][0] + " " + maxSquareLength_withTester[2][1]);
     }
+    /* wrong test
+    { {3724,3818}, {1499,3345}, {8261,555}, {3791,2985}, {3039,5626}, {1521,6781}, {5123,1275}, {8441,201}, {1381,802}, {8991,8670}, {8127,230}, {4970,7929}, {8591,3998}, {2611,1913}, {4926,2596}, {8025,7992},  }
+    Divide and Conquer result : 324.8123955808902 Tester result : 313.4483871478815
+
+    { {0,8980}, {0,2449}, {0,8526}, {0,5297}, {0,3138}, {0,8026}, {0,8837}, {0,8528}, {0,6652}, {0,6525}, {0,5912}, {0,3268}, {0,6365}, {0,4046}, {0,6796}, {0,8421}, {0,6324}, {0,3370}, {0,5651}, {0,5779}, {0,2706}, {0,7002}, {0,4673},  }
+    Divide and Conquer result : 41.78614278938494 Tester result : 2.3607292648011935
+     */
 }

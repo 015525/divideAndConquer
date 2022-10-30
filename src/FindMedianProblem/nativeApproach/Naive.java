@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class Naive {
 
-    int naive(int[] arr){
+    public int naive(int[] arr){
         Arrays.sort(arr);
         int med=0;
         if (arr.length%2==0){

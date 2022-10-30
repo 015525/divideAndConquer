@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class medianOfMedian {
 
-    int select(int arr[], int i, int n, int p, int q, boolean first_enter){
+    public int select(int arr[], int i, int n, int p, int q, boolean first_enter){
         if (first_enter){
             if (i%2!= 0){
                 i--;
@@ -16,10 +16,10 @@ public class medianOfMedian {
         if (p==q) return arr[p];
 
         int med_arr[] = get_medians(arr, n);
-        for(int c = 0; c<med_arr.length; c++){
+        /*for(int c = 0; c<med_arr.length; c++){
             System.out.print(med_arr[c] + " ");
         }
-        System.out.println();
+        System.out.println();*/
 
         int x=0;
         if (med_arr.length > 5) {
@@ -30,12 +30,12 @@ public class medianOfMedian {
 
         int k=r-p;
 
-        System.out.println("k is " + k);
+        /*System.out.println("k is " + k);
         for(int c = p; c<q+1; c++){
             System.out.print(arr[c] + " ");
         }
         System.out.println();
-        System.out.println("================================");
+        System.out.println("================================");*/
 
         if (i==k) return arr[r];
         else if (i < k) return select(arr, i, n * (3/4), p, r-1, false);
@@ -64,7 +64,7 @@ public class medianOfMedian {
         int[] med_arr = new int[n/5];
         int c=0;
         for (int i =0; i<n && n-i > 4;) {
-            System.out.println("itr number is " + i);
+            //System.out.println("itr number is " + i);
             int temp[] = {0,0,0,0,0};
             System.arraycopy(arr, i, temp, 0, 5);
             Arrays.sort(temp);
@@ -76,10 +76,10 @@ public class medianOfMedian {
     }
 
     private int partition(int[] arr, int p, int q) {
-        System.out.println("Entered");
+        //System.out.println("Entered");
         int x = arr[p];
         int i = p;
-        System.out.println("i of partition is " + i);
+        //System.out.println("i of partition is " + i);
         for (int j=i+1; j<q+1; j++){
             if (arr[j] < x){
                 i++;
