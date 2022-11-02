@@ -8,7 +8,14 @@ public class Naive {
 
     public int naive(int[] arr){
         Arrays.sort(arr);
-        int med=0;
+        /*System.out.println("NAIVE SORT ");
+        System.out.println();
+        System.out.print("{");
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + ", ");
+        }
+        System.out.print("}");*/
+        int med;
         if (arr.length%2==0){
             med = (arr.length)/2-1;
         }else {

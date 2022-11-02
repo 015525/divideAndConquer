@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="divideAndConque_algoritm_lab1:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/divideAndConque_algoritm_lab1_jar2</output-path>
+    <root id="archive" name="divideAndConque_algoritm_lab1.jar">
+      <element id="module-output" name="divideAndConque_algoritm_lab1" />
+      <element id="module-source" name="divideAndConque_algoritm_lab1" />
+    </root>
+  </artifact>
+</component>

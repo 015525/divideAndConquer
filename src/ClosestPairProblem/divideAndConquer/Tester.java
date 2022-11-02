@@ -29,7 +29,7 @@ public class Tester {
 
     void test(int num_of_tests){
         for (int j=0; j<num_of_tests; j++) {
-            int num_of_points = new Random().nextInt(4, 1000000);
+            int num_of_points = new Random().nextInt(4, 100000);
             double[][] points_array = new double[num_of_points][2];
             for (int i = 0; i < num_of_points; i++) {
                 points_array[i][0] = new Random().nextDouble(-1000000, 1000000);

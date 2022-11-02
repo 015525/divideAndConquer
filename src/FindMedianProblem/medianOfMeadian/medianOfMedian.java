@@ -7,23 +7,29 @@ import java.util.Arrays;
 public class medianOfMedian {
 
     public int select(int arr[], int i, int n, int p, int q, boolean first_enter){
+        //System.out.println("i now is " + i);
         if (first_enter){
-            if (i%2!= 0){
+            if (n%2== 0){
                 i--;
             }
         }
 
         if (p==q) return arr[p];
 
+        //System.out.println("n is " + n);
         int med_arr[] = get_medians(arr, n);
         /*for(int c = 0; c<med_arr.length; c++){
             System.out.print(med_arr[c] + " ");
         }
         System.out.println();*/
 
-        int x=0;
+        int x;
         if (med_arr.length > 5) {
             x = select(med_arr, (med_arr.length) / 2, med_arr.length, 0, med_arr.length - 1, true);
+        }else if (med_arr.length == 0){
+            x = arr[0];
+        }else {
+            x= med_arr[0];
         }
 
         int r = med_partition(arr, x, p, q);
@@ -38,8 +44,8 @@ public class medianOfMedian {
         System.out.println("================================");*/
 
         if (i==k) return arr[r];
-        else if (i < k) return select(arr, i, n * (3/4), p, r-1, false);
-        else return select(arr, i-k-1, n * (3/4), r+1, q, false);
+        else if (i < k) return select(arr, i, (r-p), p, r-1, false);
+        else return select(arr, i-k-1, (q-r), r+1, q, false);
 
         //int k = r-p;
         /*if (i==k) return arr[r];
@@ -97,7 +103,7 @@ public class medianOfMedian {
     }
 
     public static void main(String[] args){
-        int arr[] = {-3, -67, 79, -70, 27, 70, 42, 82, -61, -57, -70, -41, 22, -1, 37, -90, 27, -60};
+        int arr[] = {21753, 18079, 71794, -96073, 58485, 34634, -66920, -59759, 91003, -21203, 49281, 99944, 70933, -91521, -35218};
         medianOfMedian med = new medianOfMedian();
         int x=1;
         //rand.test(arr, x);
@@ -108,3 +114,5 @@ public class medianOfMedian {
     }
 
 }
+//{-96073, -91521, -66920, -59759, -35218, -21203, 18079, 21753, 34634, 49281, 58485, 70933, 71794, 91003, 99944}
+//right answer is :- 21753

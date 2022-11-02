@@ -1,5 +1,6 @@
 package ClosestPairProblem.divideAndConquer;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -79,15 +80,16 @@ public class DivideAndConquer {
         return  FindClosetPairDis(xarr, yarr);
     }
 
-    public static void main(String[] args) {
-        double[][] points_array = { {0,8980}, {0,2449}, {0,8526}, {0,5297}, {0,3138}, {0,8026}, {0,8837}, {0,8528}, {0,6652}, {0,6525}, {0,5912}, {0,3268}, {0,6365}, {0,4046}, {0,6796}, {0,8421}, {0,6324}, {0,3370}, {0,5651}, {0,5779}, {0,2706}, {0,7002}, {0,4673}};
-
+    public static void main(String[] args) throws IOException {
+        InputOutput i = new InputOutput();
+        double[][] points_array = i.get_input(args[0]);//{ {0,8980}, {0,2449}, {0,8526}, {0,5297}, {0,3138}, {0,8026}, {0,8837}, {0,8528}, {0,6652}, {0,6525}, {0,5912}, {0,3268}, {0,6365}, {0,4046}, {0,6796}, {0,8421}, {0,6324}, {0,3370}, {0,5651}, {0,5779}, {0,2706}, {0,7002}, {0,4673}};
         DivideAndConquer findCloset = new DivideAndConquer();
-        Tester t = new Tester();
+        //Tester t = new Tester();
         double maxSquareLength = findCloset.FindClosetPair(points_array);
-        double[][] maxSquareLength_withTester = t.get_greatest_length(points_array);
-        System.out.println("Divide and Conquer result : " + maxSquareLength + " Tester result : " + maxSquareLength_withTester[0][0] + " points : ");
-        System.out.print(maxSquareLength_withTester[1][0] + " " + maxSquareLength_withTester[1][1] + " , " + maxSquareLength_withTester[2][0] + " " + maxSquareLength_withTester[2][1]);
+        i.writeOutput(maxSquareLength, args[0]);
+        //double[][] maxSquareLength_withTester = t.get_greatest_length(points_array);
+        //System.out.println("Divide and Conquer result : " + maxSquareLength + " Tester result : " + maxSquareLength_withTester[0][0] + " points : ");
+        //System.out.print(maxSquareLength_withTester[1][0] + " " + maxSquareLength_withTester[1][1] + " , " + maxSquareLength_withTester[2][0] + " " + maxSquareLength_withTester[2][1]);
     }
     /* wrong test
     { {3724,3818}, {1499,3345}, {8261,555}, {3791,2985}, {3039,5626}, {1521,6781}, {5123,1275}, {8441,201}, {1381,802}, {8991,8670}, {8127,230}, {4970,7929}, {8591,3998}, {2611,1913}, {4926,2596}, {8025,7992},  }
